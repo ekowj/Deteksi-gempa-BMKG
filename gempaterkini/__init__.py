@@ -18,18 +18,49 @@ def ekstrasi_data():
     except Exception:
         return None
     if content.status_code == 200:
-        print(content.text)
-        #soup = BeautifulSoup(content)
-        #print(soup.prettify())
+        soup = BeautifulSoup(content.text, 'html.parser')
+
+        result = soup.find('span', {'class':'waktu'})
+        result = result.text.split(', ')
+        tanggal = result[0]
+        waktu = result[1]
+
+        result = soup.find('div', {'class': 'col-md-6 col-xs-6 gempabumi-detail no-padding'})
+        result = result.findChildren('li')
+        i = 0
+        magnitudo = None
+        kedalaman = None
+        ls = None
+        bt = None
+        lokasi = None
+        dirasakan = None
+
+        for res in result:
+            if i == 1:
+                magnitudo = res.text
+            elif i == 2:
+                kedalaman = res.text
+            elif i == 3:
+                koordinat = res.text.split(' - ')
+                ls = koordinat[0]
+                bt = koordinat[1]
+            elif i == 4:
+                lokasi = res.text
+            elif i == 5:
+                dirasakan = res.text
+            i = i+1
+
+
+
 
         hasil = dict()
-        hasil ['tanggal'] = '12 Agustus 2022'
-        hasil ['waktu'] = '12:25:52 WIB'
-        hasil ['magnitudo'] = 3.6
-        hasil ['kedalaman'] = 4.0
-        hasil ['lokasi'] ={'ls': 3.74, 'bt': 119.54}
-        hasil ['pusat'] = 'Pusat Gempa berada di darat 10 km BaratDaya Pinrang'
-        hasil ['dirasakan'] = 'Dirasakan (Skala MMI): II-III Pinrang'
+        hasil ['tanggal'] = tanggal #'12 Agustus 2022'
+        hasil ['waktu'] = waktu#'12:25:52 WIB'
+        hasil ['magnitudo'] = magnitudo#3.6
+        hasil ['kedalaman'] = kedalaman#4.0
+        hasil ['lokasi'] ={'ls': ls, 'bt': bt}
+        hasil ['pusat'] = lokasi #'Pusat Gempa berada di darat 10 km BaratDaya Pinrang'
+        hasil ['dirasakan'] = dirasakan #'Dirasakan (Skala MMI): II-III Pinrang'
         return hasil
     else:
         return None
