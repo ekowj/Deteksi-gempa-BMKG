@@ -1,3 +1,7 @@
+import requests
+from bs4 import BeautifulSoup
+
+
 def ekstrasi_data():
     """
         Tanggal: 12 Agustus 2022
@@ -9,19 +13,32 @@ def ekstrasi_data():
         Dirasakan: Dirasakan (Skala MMI): II-III Pinrang
         :return:
     """
-    hasil = dict()
-    hasil ['tanggal'] = '12 Agustus 2022'
-    hasil ['waktu'] = '12:25:52 WIB'
-    hasil ['magnitudo'] = 3.6
-    hasil ['kedalaman'] = 4.0
-    hasil ['lokasi'] ={'ls': 3.74, 'bt': 119.54}
-    hasil ['pusat'] = 'Pusat Gempa berada di darat 10 km BaratDaya Pinrang'
-    hasil ['dirasakan'] = 'Dirasakan (Skala MMI): II-III Pinrang'
+    try:
+        content = requests.get('https://bmkg.go.id')
+    except Exception:
+        return None
+    if content.status_code == 200:
+        print(content.text)
+        #soup = BeautifulSoup(content)
+        #print(soup.prettify())
 
-    return hasil
+        hasil = dict()
+        hasil ['tanggal'] = '12 Agustus 2022'
+        hasil ['waktu'] = '12:25:52 WIB'
+        hasil ['magnitudo'] = 3.6
+        hasil ['kedalaman'] = 4.0
+        hasil ['lokasi'] ={'ls': 3.74, 'bt': 119.54}
+        hasil ['pusat'] = 'Pusat Gempa berada di darat 10 km BaratDaya Pinrang'
+        hasil ['dirasakan'] = 'Dirasakan (Skala MMI): II-III Pinrang'
+        return hasil
+    else:
+        return None
 
 
 def tampilkan_data(result):
+    if result is None:
+        print("tidak bisa tampilkan data gempa")
+        return
     print('Gempa Terakhir berdasarkan BMKG')
     print (f"Tanggal      : {result['tanggal']}")
     print (f"Waktu        : {result['waktu']}")
@@ -31,3 +48,6 @@ def tampilkan_data(result):
     print (f"Pusat Gempa  : {result['pusat']}")
     print (f"Dirasakan    : {result['dirasakan']}")
 
+if __name__== '__main__':
+    print('Aplikasi Utama')
+    print ('hai')
