@@ -54,13 +54,13 @@ def ekstrasi_data():
 
 
         hasil = dict()
-        hasil ['tanggal'] = tanggal #'12 Agustus 2022'
-        hasil ['waktu'] = waktu#'12:25:52 WIB'
-        hasil ['magnitudo'] = magnitudo#3.6
-        hasil ['kedalaman'] = kedalaman#4.0
+        hasil ['tanggal'] = tanggal
+        hasil ['waktu'] = waktu
+        hasil ['magnitudo'] = magnitudo
+        hasil ['kedalaman'] = kedalaman
         hasil ['lokasi'] ={'ls': ls, 'bt': bt}
-        hasil ['pusat'] = lokasi #'Pusat Gempa berada di darat 10 km BaratDaya Pinrang'
-        hasil ['dirasakan'] = dirasakan #'Dirasakan (Skala MMI): II-III Pinrang'
+        hasil ['pusat'] = lokasi
+        hasil ['dirasakan'] = dirasakan
         return hasil
     else:
         return None
@@ -79,6 +79,6 @@ def tampilkan_data(result):
     print (f"Pusat Gempa  : {result['pusat']}")
     print (f"Dirasakan    : {result['dirasakan']}")
 
-if __name__== '__main__':
-    print('Aplikasi Utama')
-    print ('hai')
+#if __name__== '__main__':
+    #print('Aplikasi Utama')
+    #print ('hai')
